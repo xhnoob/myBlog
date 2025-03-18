@@ -1,24 +1,24 @@
 /**
- * 马卡龙风格博客特效
+ * 中国风禅意博客特效
  * 包含：点击特效、鼠标跟随特效、页面加载特效
  */
 
-// 温馨语录数组 - 点击时随机显示
+// 禅意语录数组 - 点击时随机显示
 const zenQuotes = [
-    "每一天都是新的开始",
-    "保持微笑，保持前行",
-    "简单生活，快乐点滴",
-    "愿你被这个世界温柔以待",
-    "做自己的光，照亮前行的路",
-    "微小的感动，日常的治愈",
-    "温暖从心开始",
-    "生活需要仪式感",
-    "愿你所有的努力都不被辜负",
-    "做一个温暖的人",
-    "平静安然，温暖如斯",
-    "心之所向，素履以往",
-    "愿你的生活甜甜蜜蜜",
-    "一切都会好起来的"
+    "万法皆空，随缘自在",
+    "参禅即生活，生活即参禅",
+    "一花一世界，一叶一菩提",
+    "心若无尘，何来尘染",
+    "静坐常思己过，闲谈莫论人非",
+    "种如是因，收如是果",
+    "心静自然凉",
+    "万般带不去，唯有业随身",
+    "心灵如水，方能映照万物",
+    "一切有为法，如梦幻泡影",
+    "清净心如月，轮回不染尘",
+    "问心无愧，虚怀若谷",
+    "身在尘世中，心系菩提道",
+    "福慧双修，自在人生"
 ];
 
 // 文字颜色数组 - 马卡龙配色
@@ -34,7 +34,7 @@ const textColors = [
 // 点击特效
 // ----------------------
 document.addEventListener('DOMContentLoaded', function() {
-    // 点击生成温馨语录特效
+    // 点击生成禅语特效
     document.addEventListener('click', function(e) {
         createZenText(e.pageX, e.pageY);
         createClickRipple(e.pageX, e.pageY);
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
 });
 
-// 创建点击生成温馨语录特效
+// 创建点击生成禅语特效
 function createZenText(x, y) {
     const text = document.createElement('div');
     const randomQuote = zenQuotes[Math.floor(Math.random() * zenQuotes.length)];
@@ -85,8 +85,29 @@ function createZenText(x, y) {
     }, 2000);
 }
 
-// 创建点击涟漪特效
+// 创建点击涟漪特效 - 使用禅意符号
 function createClickRipple(x, y) {
+    // 创建符号元素
+    const zenSymbol = document.createElement('div');
+    const symbols = ['☸', '☯', '卍', '卐', '☬', '⊕'];
+    const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+    const randomColor = textColors[Math.floor(Math.random() * textColors.length)];
+    
+    zenSymbol.innerText = randomSymbol;
+    zenSymbol.style.position = 'absolute';
+    zenSymbol.style.left = `${x}px`;
+    zenSymbol.style.top = `${y}px`;
+    zenSymbol.style.color = randomColor;
+    zenSymbol.style.fontSize = '1.5rem';
+    zenSymbol.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+    zenSymbol.style.opacity = '1';
+    zenSymbol.style.pointerEvents = 'none';
+    zenSymbol.style.zIndex = '9998';
+    zenSymbol.style.animation = 'symbol-fade 1.5s ease-out';
+    
+    document.body.appendChild(zenSymbol);
+    
+    // 创建涟漪效果
     const ripple = document.createElement('div');
     
     ripple.style.position = 'absolute';
@@ -98,15 +119,16 @@ function createClickRipple(x, y) {
     ripple.style.border = '1px solid rgba(240, 128, 128, 0.8)';
     ripple.style.transform = 'translate(-50%, -50%)';
     ripple.style.animation = 'ripple 1s linear';
-    ripple.style.zIndex = '9998';
+    ripple.style.zIndex = '9997';
     ripple.style.pointerEvents = 'none';
     
     document.body.appendChild(ripple);
     
     // 移除元素
     setTimeout(() => {
+        document.body.removeChild(zenSymbol);
         document.body.removeChild(ripple);
-    }, 1000);
+    }, 1500);
 }
 
 // 添加CSS动画
@@ -122,6 +144,18 @@ style.innerHTML = `
             width: 100px;
             height: 100px;
             opacity: 0;
+        }
+    }
+    
+    @keyframes symbol-fade {
+        0% { 
+            transform: translate(-50%, -50%) rotate(0deg); 
+            opacity: 1;
+        }
+        100% { 
+            transform: translate(-50%, -50%) rotate(360deg); 
+            opacity: 0;
+            font-size: 3rem;
         }
     }
     
@@ -239,52 +273,100 @@ function initMouseTrail() {
 // 页面加载特效
 // ----------------------
 function initPageFadeIn() {
-    // 标题浮动特效
+    // 为网站标题添加漂浮动画
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
         siteTitle.classList.add('logo-float');
     }
     
-    // 内容淡入特效
-    const fadeElements = document.querySelectorAll('.site-content, .post-item, .page-content, .post-content');
-    let delay = 0;
+    // 为内容添加淡入动画
+    const contentElements = [
+        '.site-content',
+        '.post-item',
+        '.site-footer'
+    ];
     
-    fadeElements.forEach(el => {
-        el.style.opacity = '0';
-        setTimeout(() => {
+    contentElements.forEach((selector, index) => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
             el.classList.add('fade-in');
-        }, delay);
-        delay += 200;
+            el.style.animationDelay = `${0.2 * index}s`;
+        });
     });
+    
+    // 加载时添加禅意图案
+    setTimeout(() => {
+        const zenPatterns = ['☸', '☯', '卍', '☬'];
+        for (let i = 0; i < 5; i++) {
+            const pattern = document.createElement('div');
+            const randomPattern = zenPatterns[Math.floor(Math.random() * zenPatterns.length)];
+            
+            pattern.innerHTML = randomPattern;
+            pattern.style.position = 'fixed';
+            pattern.style.fontSize = `${20 + Math.random() * 30}px`;
+            pattern.style.color = textColors[Math.floor(Math.random() * textColors.length)];
+            pattern.style.opacity = '0.1';
+            pattern.style.top = `${Math.random() * 100}%`;
+            pattern.style.left = `${Math.random() * 100}%`;
+            pattern.style.zIndex = '-1';
+            pattern.style.pointerEvents = 'none';
+            pattern.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            document.body.appendChild(pattern);
+        }
+    }, 500);
 }
 
 // ----------------------
 // 页面滚动特效
 // ----------------------
 function initScrollEffects() {
-    // 滚动时显示文章
-    const postItems = document.querySelectorAll('.post-item');
-    
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+    // 淡入式显示元素
+    const scrollFadeIn = () => {
+        const elements = document.querySelectorAll('.post-item, h1, h2, blockquote');
         
-        postItems.forEach(item => {
-            item.style.opacity = '0';
-            observer.observe(item);
+        elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // 元素进入视口
+            if (rect.top < windowHeight * 0.9) {
+                el.classList.add('fade-in');
+            }
         });
-    } else {
-        // 回退方案
-        postItems.forEach(item => {
-            item.classList.add('fade-in');
-        });
-    }
+    };
+    
+    // 初始检查
+    scrollFadeIn();
+    
+    // 滚动时检查
+    window.addEventListener('scroll', scrollFadeIn);
+    
+    // 添加页面顶部禅意符号 - 随机位置
+    const addZenPatterns = () => {
+        const header = document.querySelector('.site-header');
+        if (!header) return;
+        
+        const headerRect = header.getBoundingClientRect();
+        const symbols = ['☸', '☯', '卍', '☬', '⊕'];
+        
+        for (let i = 0; i < 3; i++) {
+            const symbol = document.createElement('div');
+            symbol.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            symbol.style.position = 'absolute';
+            symbol.style.top = `${Math.random() * headerRect.height}px`;
+            symbol.style.left = `${Math.random() * headerRect.width}px`;
+            symbol.style.color = textColors[Math.floor(Math.random() * textColors.length)];
+            symbol.style.fontSize = '16px';
+            symbol.style.opacity = '0.2';
+            symbol.style.zIndex = '0';
+            symbol.style.pointerEvents = 'none';
+            
+            header.appendChild(symbol);
+        }
+    };
+    
+    addZenPatterns();
 }
 
 // 动态加载纸纹背景
