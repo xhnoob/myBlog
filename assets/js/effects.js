@@ -1,40 +1,40 @@
 /**
- * 中国风博客特效
+ * 马卡龙风格博客特效
  * 包含：点击特效、鼠标跟随特效、页面加载特效
  */
 
-// 禅语数组 - 点击时随机显示
+// 温馨语录数组 - 点击时随机显示
 const zenQuotes = [
-    "心若无尘，何处不清净",
-    "万物皆空，唯有菩提",
-    "静坐常思己过，闲谈莫论人非",
-    "一花一世界，一叶一菩提",
-    "放下执着，方得自在",
-    "心静自然禅",
-    "随缘不变，不变随缘",
-    "心中若无事，何处惹尘埃",
-    "无欲则刚",
-    "一切有为法，如梦幻泡影",
-    "菩提本无树，明镜亦非台",
-    "缘起性空",
-    "烦恼即菩提",
-    "一切唯心造"
+    "每一天都是新的开始",
+    "保持微笑，保持前行",
+    "简单生活，快乐点滴",
+    "愿你被这个世界温柔以待",
+    "做自己的光，照亮前行的路",
+    "微小的感动，日常的治愈",
+    "温暖从心开始",
+    "生活需要仪式感",
+    "愿你所有的努力都不被辜负",
+    "做一个温暖的人",
+    "平静安然，温暖如斯",
+    "心之所向，素履以往",
+    "愿你的生活甜甜蜜蜜",
+    "一切都会好起来的"
 ];
 
-// 文字颜色数组
+// 文字颜色数组 - 马卡龙配色
 const textColors = [
-    '#A52A2A', // 褐红色
-    '#F2C670', // 金黄色
-    '#8B6E4E', // 棕褐色
-    '#2C2416', // 深褐色
-    '#D9C5A0'  // 淡棕色
+    '#F08080', // 珊瑚粉
+    '#96CEB4', // 薄荷绿
+    '#FFAAAA', // 淡粉红
+    '#D9A6A6', // 深粉色
+    '#FFEEAD'  // 浅黄色
 ];
 
 // ----------------------
 // 点击特效
 // ----------------------
 document.addEventListener('DOMContentLoaded', function() {
-    // 点击生成禅语特效
+    // 点击生成温馨语录特效
     document.addEventListener('click', function(e) {
         createZenText(e.pageX, e.pageY);
         createClickRipple(e.pageX, e.pageY);
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
 });
 
-// 创建点击生成禅语特效
+// 创建点击生成温馨语录特效
 function createZenText(x, y) {
     const text = document.createElement('div');
     const randomQuote = zenQuotes[Math.floor(Math.random() * zenQuotes.length)];
@@ -95,7 +95,7 @@ function createClickRipple(x, y) {
     ripple.style.width = '10px';
     ripple.style.height = '10px';
     ripple.style.borderRadius = '50%';
-    ripple.style.border = '1px solid rgba(242, 198, 112, 0.8)';
+    ripple.style.border = '1px solid rgba(240, 128, 128, 0.8)';
     ripple.style.transform = 'translate(-50%, -50%)';
     ripple.style.animation = 'ripple 1s linear';
     ripple.style.zIndex = '9998';
@@ -140,7 +140,7 @@ style.innerHTML = `
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: rgba(242, 198, 112, 0.6);
+        background-color: rgba(240, 128, 128, 0.6);
         pointer-events: none;
         z-index: 9997;
         opacity: 0.8;
@@ -172,11 +172,22 @@ function initMouseTrail() {
         const dot = document.createElement('div');
         dot.className = 'trail';
         document.body.appendChild(dot);
+        
+        // 随机生成颜色 - 马卡龙色系
+        const colors = [
+            'rgba(240, 128, 128, 0.6)', // 珊瑚粉
+            'rgba(150, 206, 180, 0.6)', // 薄荷绿
+            'rgba(255, 170, 170, 0.6)', // 淡粉红
+            'rgba(255, 238, 173, 0.6)'  // 浅黄色
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
         dots.push({
             el: dot,
             x: 0,
             y: 0,
-            size: 8 - (i * 0.4) // 尺寸逐渐减小
+            size: 8 - (i * 0.4), // 尺寸逐渐减小
+            color: randomColor
         });
     }
     
@@ -215,6 +226,7 @@ function initMouseTrail() {
             dot.style.width = `${size}px`;
             dot.style.height = `${size}px`;
             dot.style.opacity = 1 - (i / dots.length);
+            dot.style.backgroundColor = dots[i].color;
         }
         
         requestAnimationFrame(animateTrail);
