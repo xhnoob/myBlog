@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap">
     {% seo %}
 </head>
 <body>
@@ -14,6 +15,8 @@
             <nav class="site-nav">
                 <ul>
                     <li><a href="{{ '/' | relative_url }}">首页</a></li>
+                    <li><a href="{{ '/categories/' | relative_url }}">分类</a></li>
+                    <li><a href="{{ '/tags/' | relative_url }}">标签</a></li>
                     <li><a href="{{ '/about/' | relative_url }}">关于我</a></li>
                 </ul>
             </nav>
@@ -29,7 +32,11 @@
     <footer class="site-footer">
         <div class="container">
             <p>&copy; {{ site.time | date: '%Y' }} {{ site.author }}. 保留所有权利。</p>
+            <p class="zen-quote">一花一世界，一叶一菩提</p>
         </div>
     </footer>
+    
+    <!-- 添加特效脚本 -->
+    <script src="{{ '/assets/js/effects.js' | relative_url }}"></script>
 </body>
 </html> 
