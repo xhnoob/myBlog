@@ -21,13 +21,13 @@ const zenQuotes = [
     "福慧双修，自在人生"
 ];
 
-// 文字颜色数组 - 马卡龙配色
+// 文字颜色数组 - 禅意风配色
 const textColors = [
-    '#F08080', // 珊瑚粉
-    '#96CEB4', // 薄荷绿
-    '#FFAAAA', // 淡粉红
-    '#D9A6A6', // 深粉色
-    '#FFEEAD'  // 浅黄色
+    '#6D5545', // 棕色
+    '#8D7866', // 淡棕色
+    '#9C8772', // 灰棕色
+    '#817267', // 深棕色
+    '#5D4B3C'  // 深褐色
 ];
 
 // ----------------------
@@ -89,7 +89,7 @@ function createZenText(x, y) {
 function createClickRipple(x, y) {
     // 创建符号元素
     const zenSymbol = document.createElement('div');
-    const symbols = ['☸', '☯', '卍', '卐', '☬', '⊕'];
+    const symbols = ['☸', '☯', '卍', '卐', '☬', '⊕', '⎔', '☒', '♲'];
     const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
     const randomColor = textColors[Math.floor(Math.random() * textColors.length)];
     
@@ -107,7 +107,7 @@ function createClickRipple(x, y) {
     
     document.body.appendChild(zenSymbol);
     
-    // 创建涟漪效果
+    // 创建涟漪效果 - 墨水扩散效果
     const ripple = document.createElement('div');
     
     ripple.style.position = 'absolute';
@@ -116,7 +116,7 @@ function createClickRipple(x, y) {
     ripple.style.width = '10px';
     ripple.style.height = '10px';
     ripple.style.borderRadius = '50%';
-    ripple.style.border = '1px solid rgba(240, 128, 128, 0.8)';
+    ripple.style.border = '1px solid rgba(109, 85, 69, 0.8)';
     ripple.style.transform = 'translate(-50%, -50%)';
     ripple.style.animation = 'ripple 1s linear';
     ripple.style.zIndex = '9997';
@@ -174,7 +174,7 @@ style.innerHTML = `
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: rgba(240, 128, 128, 0.6);
+        background-color: rgba(109, 85, 69, 0.6);
         pointer-events: none;
         z-index: 9997;
         opacity: 0.8;
@@ -207,12 +207,12 @@ function initMouseTrail() {
         dot.className = 'trail';
         document.body.appendChild(dot);
         
-        // 随机生成颜色 - 马卡龙色系
+        // 随机生成颜色 - 禅意色系
         const colors = [
-            'rgba(240, 128, 128, 0.6)', // 珊瑚粉
-            'rgba(150, 206, 180, 0.6)', // 薄荷绿
-            'rgba(255, 170, 170, 0.6)', // 淡粉红
-            'rgba(255, 238, 173, 0.6)'  // 浅黄色
+            'rgba(109, 85, 69, 0.6)', // 棕色
+            'rgba(141, 120, 102, 0.6)', // 淡棕色
+            'rgba(156, 135, 114, 0.6)', // 灰棕色
+            'rgba(93, 75, 60, 0.6)'  // 深褐色
         ];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         
@@ -296,7 +296,7 @@ function initPageFadeIn() {
     
     // 加载时添加禅意图案
     setTimeout(() => {
-        const zenPatterns = ['☸', '☯', '卍', '☬'];
+        const zenPatterns = ['☸', '☯', '卍', '☬', '⊕', '♲'];
         for (let i = 0; i < 5; i++) {
             const pattern = document.createElement('div');
             const randomPattern = zenPatterns[Math.floor(Math.random() * zenPatterns.length)];
@@ -348,7 +348,7 @@ function initScrollEffects() {
         if (!header) return;
         
         const headerRect = header.getBoundingClientRect();
-        const symbols = ['☸', '☯', '卍', '☬', '⊕'];
+        const symbols = ['☸', '☯', '卍', '☬', '⊕', '♲'];
         
         for (let i = 0; i < 3; i++) {
             const symbol = document.createElement('div');
