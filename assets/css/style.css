@@ -15,6 +15,7 @@
     --border-color: #FFD1D1; /* 淡粉色边框 */
     --highlight-color: #FFEEAD; /* 浅黄色高亮 */
     --shadow-color: rgba(0, 0, 0, 0.05);
+    --mobile-bg-overlay: rgba(255, 245, 245, 0.95); /* 移动设备背景叠加层 */
 }
 
 @font-face {
@@ -340,14 +341,26 @@ blockquote {
     margin-top: 10px;
 }
 
-/* 响应式设计 */
+/* 响应式设计 - 增强移动设备支持 */
 @media (max-width: 768px) {
+    body {
+        font-size: 15px;
+        background-attachment: scroll; /* 修复iOS背景固定问题 */
+    }
+    
+    body::before {
+        background-color: var(--mobile-bg-overlay);
+    }
+    
     .site-header {
         padding: 15px 0;
+        margin-bottom: 20px;
     }
     
     .site-content {
         padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
     }
     
     .site-title {
@@ -360,6 +373,103 @@ blockquote {
     
     .site-header::before, .site-header::after {
         display: none;
+    }
+    
+    .site-nav ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .site-nav a {
+        font-size: 1em;
+    }
+    
+    h1, h2, h3 {
+        line-height: 1.4;
+    }
+    
+    h1 {
+        font-size: 1.6em;
+    }
+    
+    h2 {
+        font-size: 1.4em;
+    }
+    
+    h3 {
+        font-size: 1.2em;
+    }
+    
+    .post-item {
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+    }
+    
+    .post-meta span {
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .read-more {
+        padding: 4px 12px;
+        font-size: 0.9em;
+    }
+    
+    .pagination {
+        margin-top: 30px;
+    }
+    
+    blockquote {
+        padding: 0.8em;
+        margin: 1em 0;
+    }
+    
+    /* 确保滚动顺畅 */
+    html, body {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* 特别针对小屏幕手机 */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .site-content {
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .site-title {
+        font-size: 1.3em;
+        letter-spacing: 1px;
+    }
+    
+    .site-nav ul {
+        gap: 15px;
+    }
+    
+    .post-item::after {
+        font-size: 1em;
+        bottom: -10px;
+    }
+    
+    h1::before, h2::before {
+        font-size: 0.9em;
+    }
+    
+    .post-meta {
+        font-size: 0.8em;
+    }
+    
+    .site-footer {
+        padding: 20px 0;
     }
 }
 
