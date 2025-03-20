@@ -237,6 +237,15 @@ blockquote {
     text-align: center;
     padding-bottom: 15px;
     border-bottom: 1px dashed var(--border-color);
+    position: relative;
+}
+
+.post-title a.read-more {
+    position: relative;
+    font-size: 0.45em;
+    margin-left: 10px;
+    top: -5px;
+    font-weight: normal;
 }
 
 .post-meta {
@@ -258,13 +267,17 @@ blockquote {
 
 .read-more {
     display: inline-block;
-    margin-top: 15px;
+    margin-left: 15px;
+    font-size: 0.6em;
     font-weight: bold;
     color: var(--primary-color);
-    padding: 5px 15px;
+    padding: 2px 10px;
     border: 1px solid var(--primary-color);
     border-radius: 4px;
     transition: all 0.3s ease;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
 }
 
 .read-more:hover {
@@ -515,4 +528,14 @@ blockquote {
 .tag-title::before {
     content: "☸ " !important;
     color: var(--secondary-color) !important;
+}
+
+/* 在移动设备上调整阅读更多按钮 */
+@media (max-width: 600px) {
+    .post-title .read-more {
+        display: block;
+        margin: 10px 0 0 0;
+        font-size: 0.7em;
+        text-align: center;
+    }
 } 

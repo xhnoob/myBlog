@@ -11,6 +11,7 @@ layout: default
         <article class="post-item">
             <h2 class="post-title">
                 <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
             </h2>
             <div class="post-meta">
                 <time datetime="{{ post.date | date_to_xmlschema }}">
@@ -27,7 +28,6 @@ layout: default
             </div>
             <div class="post-excerpt">
                 {{ post.excerpt }}
-                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
             </div>
         </article>
         {% endfor %}
@@ -36,6 +36,7 @@ layout: default
         <article class="post-item">
             <h2 class="post-title">
                 <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
             </h2>
             <div class="post-meta">
                 <time datetime="{{ post.date | date_to_xmlschema }}">
@@ -52,7 +53,6 @@ layout: default
             </div>
             <div class="post-excerpt">
                 {{ post.excerpt }}
-                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
             </div>
         </article>
         {% endfor %}
