@@ -20,7 +20,7 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
 end
 
 # 提高Windows上的性能
-gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+#gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
 # 锁定eventmachine版本
 gem "eventmachine", "1.2.7", :platforms => [:mingw, :x64_mingw, :mswin]

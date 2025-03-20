@@ -5,17 +5,55 @@
     padding: 0;
 }
 
+/* 添加法轮旋转动画 */
+@keyframes rotate-dharma-wheel {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 明亮模式和暗黑模式的颜色变量 */
 :root {
-    --primary-color: #6D5545; /* 棕色 - 禅意主色 */
-    --secondary-color: #8D7866; /* 淡棕色 - 禅意辅色 */
-    --text-color: #333333; /* 深灰色文字 */
-    --light-bg: #F5F5F0; /* 米白色背景 */
-    --dark-bg: #817267; /* 深棕色 */
-    --accent-color: #9C8772; /* 灰棕色 - 强调色 */
-    --border-color: #D7CEC7; /* 浅棕灰色边框 */
-    --highlight-color: #E9E0D1; /* 米黄色高亮 */
+    /* 明亮模式颜色 - 亮色背景，暗色文字 */
+    --primary-color: #8B6E58; /* 棕色 - 禅意主色 */
+    --secondary-color: #A68D78; /* 淡棕色 - 禅意辅色 */
+    --text-color: #4A3F3A; /* 深棕色文字 */
+    --light-bg: #F5F0E8; /* 米白色背景 */
+    --dark-bg: #A68D78; /* 淡棕色背景 */
+    --accent-color: #B39C88; /* 棕米色 - 强调色 */
+    --border-color: #D5C8BB; /* 浅棕灰色边框 */
+    --highlight-color: #E8DAC9; /* 浅米色高亮 */
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --mobile-bg-overlay: rgba(245, 240, 232, 0.92); /* 移动设备背景叠加层 */
+    --header-bg: rgba(245, 240, 232, 0.95);
+    --content-bg: rgba(255, 250, 242, 0.97);
+    --post-bg: rgba(255, 250, 242, 0.8);
+    --footer-bg: rgba(245, 240, 232, 0.95);
+    --blockquote-bg: rgba(166, 141, 120, 0.08);
+    --post-text-color: #4A3F3A; /* 深棕色文章文字 */
+}
+
+/* 暗黑模式颜色 - 现在为原明亮模式颜色 */
+[data-theme="dark"] {
+    --primary-color: #8B6E58; /* 棕色 - 禅意主色 - 原明亮模式 */
+    --secondary-color: #A68D78; /* 淡棕色 - 禅意辅色 - 原明亮模式 */
+    --text-color: #555555; /* 中灰色文字 - 原明亮模式 */
+    --light-bg: #F5F5F0; /* 米白色背景 - 原明亮模式 */
+    --dark-bg: #9C877C; /* 深棕色 - 原明亮模式 */
+    --accent-color: #B39C88; /* 灰棕色 - 强调色 - 原明亮模式 */
+    --border-color: #E0D8D2; /* 浅棕灰色边框 - 原明亮模式 */
+    --highlight-color: #F2EBE1; /* 米黄色高亮 - 原明亮模式 */
     --shadow-color: rgba(0, 0, 0, 0.05);
-    --mobile-bg-overlay: rgba(245, 245, 240, 0.95); /* 移动设备背景叠加层 */
+    --mobile-bg-overlay: rgba(245, 245, 240, 0.95); /* 移动设备背景叠加层 - 原明亮模式 */
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --content-bg: rgba(255, 255, 255, 0.97);
+    --post-bg: rgba(139, 110, 88, 0.65);
+    --footer-bg: rgba(255, 255, 255, 0.95);
+    --blockquote-bg: rgba(150, 206, 180, 0.1);
+    --post-text-color: white;
 }
 
 @font-face {
@@ -23,6 +61,7 @@
     src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
 }
 
+/* 添加过渡效果，使主题切换更平滑 */
 body {
     font-family: "NotoSerifSC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", serif;
     font-size: 16px;
@@ -33,6 +72,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body::before {
@@ -42,7 +82,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(245, 245, 240, 0.9);
+    background-color: var(--mobile-bg-overlay);
     z-index: -1;
 }
 
@@ -100,7 +140,7 @@ blockquote {
     margin-left: 0;
     font-style: italic;
     color: var(--accent-color);
-    background-color: rgba(150, 206, 180, 0.1);
+    background-color: var(--blockquote-bg);
     padding: 1em;
     border-radius: 0 4px 4px 0;
 }
@@ -114,7 +154,7 @@ blockquote {
 
 /* 头部 */
 .site-header {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--header-bg);
     box-shadow: 0 1px 10px var(--shadow-color);
     padding: 20px 0;
     margin-bottom: 30px;
@@ -139,24 +179,90 @@ blockquote {
     right: 20px;
 }
 
+/* 网站标题发光特效 */
+@keyframes title-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(139, 110, 88, 0.5),
+                     0 0 15px rgba(139, 110, 88, 0.3),
+                     0 0 20px rgba(139, 110, 88, 0.2);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(139, 110, 88, 0.8),
+                     0 0 20px rgba(139, 110, 88, 0.6),
+                     0 0 30px rgba(139, 110, 88, 0.4),
+                     0 0 40px rgba(139, 110, 88, 0.2);
+    }
+    100% {
+        text-shadow: 0 0 5px rgba(139, 110, 88, 0.5),
+                     0 0 15px rgba(139, 110, 88, 0.3),
+                     0 0 20px rgba(139, 110, 88, 0.2);
+    }
+}
+
 .site-title {
     font-size: 2em;
     font-weight: normal;
     text-align: center;
     letter-spacing: 3px;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .site-title a {
     color: var(--primary-color);
     text-decoration: none;
+    transition: all 0.5s ease;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
-.site-title a:hover {
-    color: var(--secondary-color);
+.site-title a:hover, .site-title a:active, .site-title a:focus {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(139, 110, 88, 0.8),
+                 0 0 20px rgba(139, 110, 88, 0.6),
+                 0 0 30px rgba(139, 110, 88, 0.4),
+                 0 0 40px rgba(139, 110, 88, 0.2);
+    animation: title-glow 2s infinite;
+}
+
+/* 点击时的特效（移动设备友好） */
+.site-title a:active {
+    text-shadow: 0 0 15px rgba(139, 110, 88, 1),
+                 0 0 30px rgba(139, 110, 88, 0.8),
+                 0 0 45px rgba(139, 110, 88, 0.6),
+                 0 0 60px rgba(139, 110, 88, 0.4);
+}
+
+/* 移动设备上的标题发光特效 */
+@media (max-width: 768px) {
+    .site-title a:hover, .site-title a:active, .site-title a:focus {
+        text-shadow: 0 0 8px rgba(139, 110, 88, 0.8),
+                     0 0 16px rgba(139, 110, 88, 0.6),
+                     0 0 24px rgba(139, 110, 88, 0.4);
+        animation: title-glow 1.5s infinite;
+    }
 }
 
 .site-title a::after {
     display: none;
+}
+
+/* 覆盖默认的h1::before样式 */
+.site-title::before {
+    content: "☸";
+    color: var(--accent-color);
+    display: inline-block;
+    animation: rotate-dharma-wheel 6s linear infinite;
+    transform-origin: center;
+    margin-right: 8px;
+    position: relative;
+    top: 0;
+}
+
+h1::before, h2::before {
+    content: "☸ ";
+    color: var(--accent-color);
 }
 
 .site-nav {
@@ -189,14 +295,17 @@ blockquote {
 
 /* 页面内容 */
 .site-content {
-    background-color: rgba(255, 255, 255, 0.97);
+    background-color: var(--content-bg);
     box-shadow: 0 2px 15px var(--shadow-color);
     padding: 40px;
     margin-bottom: 40px;
     border-radius: 8px;
     position: relative;
-    overflow: hidden;
+    display: block;
+    width: 100%;
+    max-width: 100%;
     border: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
 .site-content::before {
@@ -214,9 +323,15 @@ blockquote {
 /* 文章列表 */
 .post-item {
     margin-bottom: 40px;
-    padding-bottom: 40px;
+    padding: 20px;
     border-bottom: 1px solid var(--border-color);
     position: relative;
+    background-color: var(--post-bg);
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .post-item::after {
@@ -225,7 +340,7 @@ blockquote {
     bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: white;
+    background-color: var(--light-bg);
     padding: 0 10px;
     color: var(--accent-color);
     font-size: 1.2em;
@@ -263,6 +378,14 @@ blockquote {
 .post-excerpt {
     margin-top: 20px;
     line-height: 1.8;
+    color: var(--post-text-color); /* 文章摘要字体颜色 */
+    text-shadow: none; /* 移除文字阴影，因为现在是暗色文字在亮色背景上 */
+    word-break: break-word; /* 更强力的文本换行 */
+    white-space: normal; /* 确保文本正常换行 */
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .read-more {
@@ -299,6 +422,14 @@ blockquote {
 .page-content, .post-content {
     padding-top: 30px;
     line-height: 1.8;
+    color: var(--post-text-color); /* 文章内容字体颜色 */
+    text-shadow: none; /* 移除文字阴影，因为现在是暗色文字在亮色背景上 */
+    word-break: break-word; /* 更强力的文本换行 */
+    white-space: normal; /* 确保文本正常换行 */
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* 分页 */
@@ -334,7 +465,7 @@ blockquote {
     padding: 30px 0;
     color: var(--accent-color);
     font-size: 0.9em;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--footer-bg);
     box-shadow: 0 -1px 10px var(--shadow-color);
     border-top: 2px solid var(--secondary-color);
     position: relative;
@@ -349,9 +480,90 @@ blockquote {
 }
 
 .zen-quote {
-    color: var(--primary-color);
+    color: white;
     font-style: italic;
     margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    background-color: var(--primary-color);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* 首页欢迎信息 */
+.home > h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.home > h1 + p {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    background-color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto 20px auto;
+    text-align: center;
+    width: fit-content;
+}
+
+/* 网站标题下方的禅语 */
+.site-motto {
+    text-align: center;
+    color: var(--accent-color);
+    font-size: 0.9em;
+    margin: 5px 0 15px;
+    font-style: italic;
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+/* 添加蜡烛悬停效果 */
+.site-motto::before {
+    content: "🕯️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    opacity: 0;
+    transition: all 0.5s ease;
+    text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+}
+
+.site-motto:hover {
+    color: transparent;
+}
+
+.site-motto:hover::before {
+    opacity: 1;
+    animation: candle-flicker 2s infinite alternate;
+}
+
+/* 蜡烛火焰闪烁动画 */
+@keyframes candle-flicker {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(255, 165, 0, 0.5),
+                     0 0 10px rgba(255, 165, 0, 0.3),
+                     0 0 15px rgba(255, 165, 0, 0.2);
+    }
+    25% {
+        text-shadow: 0 0 8px rgba(255, 165, 0, 0.8),
+                     0 0 15px rgba(255, 165, 0, 0.6),
+                     0 0 20px rgba(255, 165, 0, 0.4);
+    }
+    50% {
+        text-shadow: 0 0 6px rgba(255, 165, 0, 0.6),
+                     0 0 12px rgba(255, 165, 0, 0.4),
+                     0 0 18px rgba(255, 165, 0, 0.3);
+    }
+    75% {
+        text-shadow: 0 0 9px rgba(255, 165, 0, 0.7),
+                     0 0 18px rgba(255, 165, 0, 0.5),
+                     0 0 25px rgba(255, 165, 0, 0.3);
+    }
 }
 
 /* 响应式设计 - 增强移动设备支持 */
@@ -378,6 +590,11 @@ blockquote {
     
     .site-title {
         font-size: 1.5em;
+    }
+    
+    .site-motto {
+        font-size: 0.8em;
+        margin: 3px 0 10px;
     }
     
     .post-title {
@@ -507,16 +724,18 @@ blockquote {
 
 /* 分类和标签页面样式 */
 .tag-cloud {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--content-bg) !important;
     border: 1px solid var(--border-color) !important;
 }
 
 .tag-item {
-    background: rgba(150, 206, 180, 0.1) !important;
+    background: var(--blockquote-bg) !important;
+    color: var(--text-color) !important;
 }
 
 .tag-item:hover {
     background: var(--secondary-color) !important;
+    color: white !important;
 }
 
 .category-post-item::before,
@@ -530,12 +749,413 @@ blockquote {
     color: var(--secondary-color) !important;
 }
 
-/* 在移动设备上调整阅读更多按钮 */
-@media (max-width: 600px) {
-    .post-title .read-more {
-        display: block;
-        margin: 10px 0 0 0;
-        font-size: 0.7em;
-        text-align: center;
+/* 分类和标签页面的分页 */
+.category .pagination,
+.tag .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.category .pagination a,
+.tag .pagination a {
+    padding: 8px 16px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    color: var(--primary-color);
+    background-color: var(--post-bg);
+    transition: all 0.3s ease;
+}
+
+.category .pagination a:hover,
+.tag .pagination a:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.category .pagination a::after,
+.tag .pagination a::after {
+    display: none;
+}
+
+/* 分类和标签页面的文章列表 - 改为每行两个块状布局 */
+.category-post-list,
+.tag-post-list {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 每行两列 */
+    gap: 20px;
+    width: 100%;
+}
+
+.category-post-item,
+.tag-post-item {
+    border: none;
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+/* 块状设计 */
+.category-post-item a,
+.tag-post-item a {
+    display: block;
+    color: #6B4226 !important; /* 更深的棕色，添加!important确保应用 */
+    background-color: var(--post-bg);
+    padding: 25px 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    font-size: 1.2em; /* 增大字体 */
+    text-align: center;
+    height: 100%;
+    font-weight: 600; /* 加粗 */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5); /* 添加白色阴影增强对比度 */
+    letter-spacing: 0.5px; /* 增加字间距 */
+}
+
+/* 添加装饰元素 */
+.category-post-item a::before,
+.tag-post-item a::before {
+    content: "☯";
+    color: var(--accent-color);
+    font-size: 3em;
+    opacity: 0.15;
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    transition: all 0.5s ease;
+}
+
+/* 添加文章计数 */
+.category-post-item a::after,
+.tag-post-item a::after {
+    content: attr(data-count);
+    font-size: 0.8em;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.9;
+}
+
+.category-post-item a:hover,
+.tag-post-item a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+    background-color: var(--highlight-color);
+    color: #4A2512 !important; /* 悬停时更深的红棕色 */
+}
+
+.category-post-item a:hover::before,
+.tag-post-item a:hover::before {
+    transform: rotate(180deg) scale(1.2);
+    opacity: 0.3;
+}
+
+/* 暗黑模式下的标题颜色调整 */
+[data-theme="dark"] .category-post-item a,
+[data-theme="dark"] .tag-post-item a {
+    color: #E8C19D !important; /* 暗色模式下使用更亮的浅棕黄色 */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* 暗色模式下添加黑色阴影 */
+}
+
+[data-theme="dark"] .category-post-item a:hover,
+[data-theme="dark"] .tag-post-item a:hover {
+    color: #FFD9AA !important; /* 暗色模式下悬停时使用更明亮的浅橙色 */
+}
+
+/* 美化标题 */
+.category h2,
+.tag h2 {
+    color: var(--primary-color);
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 1.8em;
+}
+
+.category h2::before,
+.tag h2::before {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.category h2::after,
+.tag h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .category-post-item a,
+    .tag-post-item a {
+        padding: 20px 12px;
+        font-size: 1em;
+    }
+    
+    .category-post-item a::before,
+    .tag-post-item a::before {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-post-list,
+    .tag-post-list {
+        grid-template-columns: 1fr; /* 小屏幕上改为单列 */
+        gap: 15px;
+    }
+    
+    .category-post-item a,
+    .tag-post-item a {
+        padding: 15px 10px;
+        font-size: 0.95em;
+    }
+    
+    .category-post-item a::before,
+    .tag-post-item a::before {
+        font-size: 2em;
+    }
+}
+
+/* 分类页为空时的提示样式 */
+.category-empty-message,
+.tag-empty-message {
+    text-align: center;
+    padding: 40px;
+    background-color: var(--post-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    font-style: italic;
+    box-shadow: 0 3px 10px var(--shadow-color);
+}
+
+/* 旋转的法轮 - 首页标题 */
+.home h1::before {
+    content: "☸";
+    color: var(--accent-color);
+    display: inline-block;
+    animation: rotate-dharma-wheel 6s linear infinite;
+    transform-origin: center;
+    margin-right: 8px;
+}
+
+/* 覆盖默认的site-title样式 */
+.site-title::before {
+    content: "☸";
+    color: var(--accent-color);
+    display: inline-block;
+    animation: rotate-dharma-wheel 6s linear infinite;
+    transform-origin: center;
+    margin-right: 8px;
+}
+
+/* 修改文章背景色 */
+.post {
+    background-color: var(--post-bg);
+    padding: 20px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 确保图片和多媒体内容不会溢出容器 */
+.post-content img, .post-excerpt img, 
+.post-content video, .post-excerpt video,
+.post-content iframe, .post-excerpt iframe,
+.post-content pre, .post-excerpt pre,
+.post-content table, .post-excerpt table {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 1em auto;
+    box-sizing: border-box;
+    overflow-x: auto; /* 允许横向滚动 */
+}
+
+.post-content pre, .post-excerpt pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 1em;
+    overflow-x: auto;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.post-content code, .post-excerpt code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 100%;
+    display: inline-block;
+}
+
+/* 处理长链接 */
+.post-content a, .post-excerpt a {
+    color: #9B6A46; /* 棕褐色链接 */
+    text-decoration: underline;
+    word-break: break-all; /* 强制长链接断行 */
+}
+
+.post-content a:hover, .post-excerpt a:hover {
+    color: #BE8563; /* 淡棕褐色 */
+}
+
+/* 移除之前添加的清除浮动方法 */
+.post::after,
+.post-content::after,
+.post-excerpt::after,
+.post-item::after {
+    content: none;
+}
+
+/* 使用更可靠的clearfix方式 */
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* 添加通用的clearfix类 */
+.post,
+.post-content,
+.post-excerpt,
+.post-item,
+.site-content {
+    display: flow-root; /* 现代CSS清除浮动的方法 */
+}
+
+/* 主题切换按钮样式 */
+.theme-switch-wrapper {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 26px;
+    position: relative;
+    width: 50px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: var(--accent-color);
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 18px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.theme-switch-wrapper .theme-label {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: var(--primary-color);
+}
+
+/* 为暗黑模式添加图标 */
+.slider:after {
+    content: "☀";
+    color: #FFE066; /* 更亮的黄色 */
+    display: block;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 70%;
+    font-size: 16px;
+    text-shadow: 0 0 3px rgba(255, 224, 102, 0.3);
+}
+
+input:checked + .slider:after {
+    content: "☾";
+    color: #D6D6D6; /* 更亮的银色 */
+    left: 30%;
+    text-shadow: 0 0 3px rgba(214, 214, 214, 0.3);
+}
+
+/* 移动设备上的主题切换按钮位置调整 */
+@media (max-width: 768px) {
+    .theme-switch-wrapper {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .theme-switch-wrapper .theme-label {
+        display: none;
+    }
+    
+    .theme-switch {
+        width: 45px;
+        height: 24px;
+    }
+    
+    .slider:before {
+        height: 16px;
+        width: 16px;
+    }
+    
+    input:checked + .slider:before {
+        transform: translateX(21px);
+    }
+    
+    .slider:after {
+        font-size: 14px;
     }
 } 

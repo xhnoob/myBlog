@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,7 @@
     <header class="site-header">
         <div class="container">
             <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+            <p class="site-motto">静坐当思己过，闲谈勿论人非</p>
             <nav class="site-nav">
                 <ul>
                     <li><a href="{{ '/' | relative_url }}">首页</a></li>
@@ -20,6 +21,15 @@
                     <li><a href="{{ '/about/' | relative_url }}">关于我</a></li>
                 </ul>
             </nav>
+            
+            <!-- 主题切换按钮 -->
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" checked />
+                    <div class="slider"></div>
+                </label>
+                <span class="theme-label">切换主题</span>
+            </div>
         </div>
     </header>
 
@@ -38,5 +48,34 @@
     
     <!-- 添加特效脚本 -->
     <script src="{{ '/assets/js/effects.js' | relative_url }}"></script>
+    
+    <!-- 主题切换脚本 -->
+    <script>
+        // 主题切换功能
+        const toggleSwitch = document.querySelector('#checkbox');
+        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : 'dark';
+        
+        // 初始化主题
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        } else {
+            toggleSwitch.checked = false;
+        }
+        
+        // 切换主题功能
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        // 监听切换事件
+        toggleSwitch.addEventListener('change', switchTheme, false);
+    </script>
 </body>
 </html> 
