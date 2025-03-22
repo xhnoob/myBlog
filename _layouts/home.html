@@ -25,9 +25,19 @@ layout: default
                     {% endfor %}
                 </span>
                 {% endif %}
+                
+                {% assign content_chars = post.content | strip_html | remove: " " | remove: "\n" | remove: "\t" | remove: "\r" | size %}
+                <span class="post-word-count">
+                    字数统计：{{ content_chars }} 字
+                </span>
+                <span class="post-reading-time">
+                    预计阅读时长：{{ content_chars | divided_by: 400 | plus: 1 }} 分钟
+                </span>
             </div>
             <div class="post-excerpt">
-                {{ post.excerpt }}
+                {% if post.excerpt %}
+                {{ post.excerpt | strip_html | truncate: 300, "..." }}
+                {% endif %}
             </div>
         </article>
         {% endfor %}
@@ -50,9 +60,19 @@ layout: default
                     {% endfor %}
                 </span>
                 {% endif %}
+                
+                {% assign content_chars = post.content | strip_html | remove: " " | remove: "\n" | remove: "\t" | remove: "\r" | size %}
+                <span class="post-word-count">
+                    字数统计：{{ content_chars }} 字
+                </span>
+                <span class="post-reading-time">
+                    预计阅读时长：{{ content_chars | divided_by: 400 | plus: 1 }} 分钟
+                </span>
             </div>
             <div class="post-excerpt">
-                {{ post.excerpt }}
+                {% if post.excerpt %}
+                {{ post.excerpt | strip_html | truncate: 300, "..." }}
+                {% endif %}
             </div>
         </article>
         {% endfor %}
@@ -72,4 +92,12 @@ layout: default
         {% endif %}
     </div>
     {% endif %}
-</div> 
+</div>
+
+<style>
+.post-word-count, .post-reading-time {
+    margin-right: 15px;
+    font-size: 0.9em;
+    color: #666;
+}
+</style> 
