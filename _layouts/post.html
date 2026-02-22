@@ -37,9 +37,50 @@ layout: default
         </div>
     </header>
 
-    <div class="post-content">
+    {% if page.toc != false %}
+    <nav class="toc" id="toc">
+        <h3 class="toc-title">目录</h3>
+        <div class="toc-content" id="tocContent"></div>
+    </nav>
+    {% endif %}
+
+    <div class="post-content" id="postContent">
         {{ content }}
     </div>
+    
+    {% if page.tags %}
+    <div class="related-posts">
+        <h3>相关文章</h3>
+        <ul class="related-posts-list">
+            {% assign max_related = 3 %}
+            {% assign current_tags = page.tags %}
+            {% assign found_posts = 0 %}
+            
+            {% for post in site.posts %}
+                {% if post.url != page.url and found_posts < max_related %}
+                    {% assign common_tags = 0 %}
+                    {% for tag in current_tags %}
+                        {% if post.tags contains tag %}
+                            {% assign common_tags = common_tags | plus: 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if common_tags > 0 %}
+                        <li>
+                            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                            <span class="related-date">{{ post.date | date: "%Y年%m月%d日" }}</span>
+                        </li>
+                        {% assign found_posts = found_posts | plus: 1 %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            
+            {% if found_posts == 0 %}
+                <li class="no-related">暂无相关文章</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
 </article>
 
 <script>
@@ -109,4 +150,149 @@ function readAloud() {
 .read-aloud-btn:hover {
     background-color: #45a049;
 }
-</style> 
+
+.toc {
+    background: var(--blockquote-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1em 1.5em;
+    margin-bottom: 2em;
+}
+
+.toc-title {
+    margin: 0 0 0.5em 0;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.5em;
+}
+
+.toc-title::before {
+    content: "📑 ";
+}
+
+.toc-content {
+    font-size: 0.9em;
+}
+
+.toc-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-content li {
+    margin: 0.3em 0;
+}
+
+.toc-content a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.toc-content a:hover {
+    color: var(--primary-color);
+}
+
+.toc-content .toc-h2 {
+    padding-left: 0;
+}
+
+.toc-content .toc-h3 {
+    padding-left: 1.5em;
+}
+
+.toc-content .toc-h4 {
+    padding-left: 3em;
+}
+
+.related-posts {
+    margin-top: 3em;
+    padding-top: 1.5em;
+    border-top: 1px dashed var(--border-color);
+}
+
+.related-posts h3 {
+    color: var(--primary-color);
+    margin-bottom: 1em;
+}
+
+.related-posts h3::before {
+    content: "📚 ";
+}
+
+.related-posts-list {
+    list-style: none;
+    padding: 0;
+}
+
+.related-posts-list li {
+    padding: 0.5em 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.related-posts-list li:last-child {
+    border-bottom: none;
+}
+
+.related-posts-list a {
+    color: var(--text-color);
+}
+
+.related-posts-list a:hover {
+    color: var(--primary-color);
+}
+
+.related-date {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-left: 1em;
+}
+
+.no-related {
+    color: var(--text-muted);
+    font-style: italic;
+}
+</style>
+
+<script>
+function generateTOC() {
+    const postContent = document.getElementById('postContent');
+    const tocContent = document.getElementById('tocContent');
+    const toc = document.getElementById('toc');
+    
+    if (!postContent || !tocContent || !toc) return;
+    
+    const headings = postContent.querySelectorAll('h2, h3, h4');
+    
+    if (headings.length === 0) {
+        toc.style.display = 'none';
+        return;
+    }
+    
+    const ul = document.createElement('ul');
+    
+    headings.forEach((heading, index) => {
+        const id = `heading-${index}`;
+        heading.id = id;
+        
+        const li = document.createElement('li');
+        li.className = `toc-${heading.tagName.toLowerCase()}`;
+        
+        const a = document.createElement('a');
+        a.href = `#${id}`;
+        a.textContent = heading.textContent;
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            heading.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        li.appendChild(a);
+        ul.appendChild(li);
+    });
+    
+    tocContent.appendChild(ul);
+}
+
+document.addEventListener('DOMContentLoaded', generateTOC);
+</script> 

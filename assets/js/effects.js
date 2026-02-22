@@ -381,4 +381,44 @@ function loadPaperTexture() {
 }
 
 // 页面加载后调用
-document.addEventListener('DOMContentLoaded', loadPaperTexture); 
+document.addEventListener('DOMContentLoaded', loadPaperTexture);
+
+// 返回顶部按钮功能
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// 阅读进度条功能
+function initReadingProgress() {
+    const progressBar = document.getElementById('readingProgress');
+    if (!progressBar) return;
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${progress}%`;
+    });
+}
+
+// 初始化新功能
+document.addEventListener('DOMContentLoaded', function() {
+    initBackToTop();
+    initReadingProgress();
+}); 

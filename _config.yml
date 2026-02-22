@@ -1,15 +1,21 @@
 title: 末法之光
-description: 道相的个人博客
+description: 抖音@黑化的超级奶爸的个人博客 - 佛教思考与技术分享
 url: https://xhnoob.github.io
+baseurl: /myBlog
 author: xhnoob
+lang: zh-CN
 theme: minima
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-paginate
+  - jekyll-sitemap
 
 paginate: 5
 paginate_path: "/page:num/"
+
+timezone: Asia/Shanghai
 
 defaults:
   -
